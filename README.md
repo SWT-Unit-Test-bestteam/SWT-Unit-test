@@ -7,6 +7,7 @@
 * ...
 
 ### Screen shot
-![The Junit code with TDD](https://github.com/HoangDuong1106/math-util-1512/blob/main/images/test_class.png)
+![Setup for Database Connection](https://github.com/SWT-Unit-Test-bestteam/SWT-Unit-test/blob/main/ProjectResource/Images/huongdandoidatabase.png)
+![Database Pic](https://github.com/SWT-Unit-Test-bestteam/SWT-Unit-test/blob/main/ProjectResource/Images/database.png)
 
 #### © 2021 BestTeam | fb/SWT - HoangNT
