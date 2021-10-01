@@ -9,5 +9,5 @@
 ### Screen shot
 ![Setup for Database Connection](https://github.com/SWT-Unit-Test-bestteam/SWT-Unit-test/blob/main/ProjectResource/Images/huongdandoidatabase.png)
 ![Database Pic](https://github.com/SWT-Unit-Test-bestteam/SWT-Unit-test/blob/main/ProjectResource/Images/database.png)
-
+![Data Type in DB Pic](https://github.com/SWT-Unit-Test-bestteam/SWT-Unit-test/blob/main/ProjectResource/Images/DataType%20in%20Database.png)
 #### © 2021 BestTeam | fb/SWT - HoangNT
