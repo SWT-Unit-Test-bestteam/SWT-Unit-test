@@ -44,7 +44,7 @@ public class LocationDAO {
                     listDto.add(dto);
                 }
                 
-                return listDto;
+                return null;
             }
   
         } finally {
@@ -61,5 +61,5 @@ public class LocationDAO {
         
         return null;
     }
-    
+        
 }

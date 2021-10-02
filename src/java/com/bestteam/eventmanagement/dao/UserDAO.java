@@ -9,7 +9,6 @@ import com.bestteam.eventmanagement.dto.UserDTO;
 import com.bestteam.eventmanagement.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 

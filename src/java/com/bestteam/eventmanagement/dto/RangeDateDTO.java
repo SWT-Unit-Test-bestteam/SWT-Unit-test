@@ -5,9 +5,6 @@
  */
 package com.bestteam.eventmanagement.dto;
 
-import java.util.Date;
-import java.util.Objects;
-
 /**
  *
  * @author admin
