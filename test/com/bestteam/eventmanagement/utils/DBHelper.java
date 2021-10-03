@@ -21,8 +21,8 @@ public class DBHelper {
     }
     
     private final String serverName = "localhost";
-    private final String dbName = "EventManagementUnitTest";
+    private final String dbName = "EventManagement";
     private final String portNumber = "1433";
     private final String userID = "sa";
-    private final String password = "root";
+    private final String password = "123";
 }

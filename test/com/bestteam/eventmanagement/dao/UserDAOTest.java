@@ -5,30 +5,32 @@
  */
 package com.bestteam.eventmanagement.dao;
 
+import com.bestteam.eventmanagement.dto.UserDTO;
 import java.sql.SQLException;
-import javax.naming.NamingException;
+import java.util.List;
 import junit.framework.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.Assertions;
 
 /**
  *
  * @author admin
  */
 public class UserDAOTest {
-    
-    @Test   //biến 1 hàm đi kèm ái Annotation này thành hàm main()
-    public void checkUpdateUserGivenRightArgumentReturnsWell() {
-        LocationDAO dao = new LocationDAO();
+    @Test
+      //biến 1 hàm đi kèm ái Annotation này thành hàm main()
+    public void checkUpdateUserGivenRightArgumentReturnsWell() throws SQLException, ClassNotFoundException{
         
-        try {
-            
-            Assert.assertEquals(null, dao.getLocationByName("p"));
-        } catch (NamingException ex) {
-            System.out.println(ex);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-
+        
+        UserDAO userDAO = new UserDAO();
+        
+        UserDTO userDTO1 = userDAO.findUserReturnDTO(2);
+        UserDTO userDTO = new UserDTO(1, "antruong300&gmail.com", "thien an", "img/dasdhh", "quan 2 ", "093223", "admin");
+        
+        Assert.assertNotNull(userDTO1);
+        
+        
     }
-    
 }

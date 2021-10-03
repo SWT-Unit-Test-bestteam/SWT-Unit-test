@@ -21,8 +21,8 @@ public class DBHelperUnitTest {
     }
     
     private static final String serverName = "localhost";
-    private static final String dbName = "EventManagementUnitTest";
+    private static final String dbName = "EventManagement";
     private static final String portNumber = "1433";
     private static final String userID = "sa";
-    private static final String password = "root";
+    private static final String password = "123";
 }
