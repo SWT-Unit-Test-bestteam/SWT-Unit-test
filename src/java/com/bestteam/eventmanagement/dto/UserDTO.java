@@ -121,12 +121,5 @@ public class UserDTO {
         return "UserDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", avatar=" + avatar + ", address=" + address + ", phoneNum=" + phoneNum + ", roleName=" + roleName + '}';
     }
 
-    @Override
-    public String toString() {
-        return "UserDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", avatar=" + avatar + ", address=" + address + ", phoneNum=" + phoneNum + ", roleName=" + roleName + '}';
-    }
-
-    
-
     
 }

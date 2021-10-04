@@ -7,12 +7,8 @@ package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.UserDTO;
 import java.sql.SQLException;
-import junit.framework.Assert;
 import org.junit.Test;
 //import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 
 /**
  *
