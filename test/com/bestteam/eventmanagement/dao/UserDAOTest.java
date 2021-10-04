@@ -5,6 +5,9 @@
  */
 package com.bestteam.eventmanagement.dao;
 
+import com.bestteam.eventmanagement.utils.ConnectionInterface;
+import com.bestteam.eventmanagement.utils.DBHelper;
+import com.bestteam.eventmanagement.utils.DBHelperUnitTest;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import junit.framework.Assert;
@@ -18,11 +21,19 @@ public class UserDAOTest {
     
     @Test   //biến 1 hàm đi kèm ái Annotation này thành hàm main()
     public void checkUpdateUserGivenRightArgumentReturnsWell() {
-        LocationDAO dao = new LocationDAO();
+        ConnectionInterface DBTest = (ConnectionInterface) new DBHelperUnitTest();
+        LocationDAO dao = new LocationDAO(DBTest);
         
         try {
+            // return False
+            Assert.assertFalse(dao.getLocationByName("E"));
             
-            Assert.assertEquals(null, dao.getLocationByName("p"));
+            // return True
+            Assert.assertTrue(dao.getLocationByName("A"));
+            Assert.assertTrue(dao.getLocationByName("B"));
+            Assert.assertTrue(dao.getLocationByName("AB"));
+            Assert.assertTrue(dao.getLocationByName("BC"));
+            
         } catch (NamingException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {

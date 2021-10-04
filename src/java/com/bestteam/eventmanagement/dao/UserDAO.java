@@ -6,6 +6,7 @@
 package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.UserDTO;
+import com.bestteam.eventmanagement.utils.ConnectionInterface;
 import com.bestteam.eventmanagement.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,11 @@ import javax.naming.NamingException;
  */
 public class UserDAO {
     
+    private Connection connection;
+    
+    UserDAO(ConnectionInterface conInterface) {
+        this.connection = conInterface.makeConnection();
+    }
 
     //khi nguoi dung dang nhap bang mail fpt.edu.vn lan dau thi goi ham nay de insert thong tin vao DB
     public boolean insertNewUser(UserDTO user) throws SQLException, NamingException {
@@ -25,7 +31,7 @@ public class UserDAO {
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn = DBHelper.makeConnection();
+            conn = this.connection;
             if (conn != null) {
                 String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleID , statusId)"
                         + " VALUES(?,?,?,?,?,?,'AC')";
@@ -56,7 +62,7 @@ public class UserDAO {
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn = DBHelper.makeConnection();
+            conn = this.connection;
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
                         + " SET name=?, address=?, phoneNum=?"

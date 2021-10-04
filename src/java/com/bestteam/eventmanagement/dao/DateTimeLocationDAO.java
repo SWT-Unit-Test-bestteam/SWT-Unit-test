@@ -6,6 +6,7 @@
 package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.RangeDateDTO;
+import com.bestteam.eventmanagement.utils.ConnectionInterface;
 import com.bestteam.eventmanagement.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.Date;
@@ -23,6 +24,12 @@ import javax.naming.NamingException;
  */
 public class DateTimeLocationDAO {
     
+    private Connection connection;
+    
+    DateTimeLocationDAO(ConnectionInterface conInterface) {
+        this.connection = conInterface.makeConnection();
+    }
+    
     public List<RangeDateDTO> getFreeSlotByFirstDateOfWeek(int locationId, Date firstDateOfWeek) throws NamingException, SQLException {
         
         Connection con = null;
@@ -31,7 +38,7 @@ public class DateTimeLocationDAO {
         List<RangeDateDTO> listRangeDate;
         
         try {
-            con = DBHelper.makeConnection();
+            con = this.connection;
             String sql = "select DATEPART(dw,[date]) as day , rangeId "
                         +"from tblDateTimeLocation "
                         +"where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) ";

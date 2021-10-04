@@ -6,6 +6,7 @@
 package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.LocationDTO;
+import com.bestteam.eventmanagement.utils.ConnectionInterface;
 import com.bestteam.eventmanagement.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,13 @@ import javax.naming.NamingException;
  */
 public class LocationDAO {
 
-    public List<LocationDTO> getLocationByName(String txtSearch) throws NamingException, SQLException {
+    private Connection connection;
+    
+    LocationDAO(ConnectionInterface conInterface) {
+        this.connection = conInterface.makeConnection();
+    }
+    
+    public boolean getLocationByName(String txtSearch) throws NamingException, SQLException {
         List<LocationDTO> listDto = new ArrayList<>();
         LocationDTO dto;
         Connection con = null;
@@ -29,7 +36,7 @@ public class LocationDAO {
         ResultSet rs = null;
         
         try {
-            con = DBHelper.makeConnection();
+            con = this.connection;
             if (con != null) {
                 String sql = "select id, name "
                             +"from tblLocations "
@@ -39,12 +46,12 @@ public class LocationDAO {
                 ps.setNString(1, "%" + txtSearch + "%");
                 
                 rs = ps.executeQuery();
-                while (rs.next()) {
-                    dto = new LocationDTO(rs.getInt(1), rs.getString(2));
-                    listDto.add(dto);
-                }
+//                while (rs.next()) {
+//                    dto = new LocationDTO(rs.getInt(1), rs.getString(2));
+//                    listDto.add(dto);
+//                }
+                if (rs.next()) return true;
                 
-                return null;
             }
   
         } finally {
@@ -59,7 +66,7 @@ public class LocationDAO {
             }
         }
         
-        return null;
+        return false;
     }
         
 }
