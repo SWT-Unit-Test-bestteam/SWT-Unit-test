@@ -5,18 +5,19 @@
  */
 package com.bestteam.eventmanagement.dao;
 
+import com.bestteam.eventmanagement.utils.ConnectionInterface;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author admin
  */
-public class DBHelperTest {
-    public Connection getConnection()  {
+public class DBHelperTest implements ConnectionInterface {
+
+    @Override
+    public Connection makeConnection() {
         try {
             final String serverName = "localhost";
             final String dbName = "EventManagementUnitTest";

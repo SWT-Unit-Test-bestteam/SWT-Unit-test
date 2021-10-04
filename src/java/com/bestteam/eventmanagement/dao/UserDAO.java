@@ -21,10 +21,10 @@ import javax.naming.NamingException;
  */
 public class UserDAO {
     
-    private Connection connection;
+    private ConnectionInterface conInterface;
     
     UserDAO(ConnectionInterface conInterface) {
-        this.connection = conInterface.makeConnection();
+        this.conInterface = conInterface;
     }
 
     //khi nguoi dung dang nhap bang mail fpt.edu.vn lan dau thi goi ham nay de insert thong tin vao DB
@@ -33,7 +33,7 @@ public class UserDAO {
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             if (conn != null) {
                 String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleID , statusId)"
                         + " VALUES(?,?,?,?,?,?,'AC')";
@@ -59,12 +59,12 @@ public class UserDAO {
     }
 
     //Ham update thong tin user vao DB
-    public boolean updateUser(UserDTO user) throws SQLException, NamingException {
+    public boolean updateUser(UserDTO user) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
                         + " SET name=?, address=?, phoneNum=?"
@@ -86,6 +86,19 @@ public class UserDAO {
         }
         return check;
     }
+    
+    public void updateUserAction(String name, String email, String address, String phone) throws SQLException, ClassNotFoundException {
+        UserDTO userDTO = new UserDTO(1, email, name, "123", address, phone, "123");
+        validateUser(userDTO);
+        updateUser(userDTO);
+    }
+    
+    public void validateUser(UserDTO user) {
+        user.nameValidation();
+        user.emailValidation();
+        user.addressValidation();
+        user.phoneValidation();
+    }
 
     public boolean findUser(int userid) throws SQLException, ClassNotFoundException {
         boolean check = false;
@@ -93,7 +106,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             if (conn != null) {
                 String sql = "select email from tblUsers where id = ?";
                 stm = conn.prepareStatement(sql);
@@ -122,7 +135,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             String sql = "select roleName from tblRoles where id  = ?";
             stm = conn.prepareStatement(sql);
             stm.setInt(1, roleID);
@@ -137,9 +150,9 @@ public class UserDAO {
             if (stm != null) {
                 stm.close();
             }
-            if (conn != null) {
-                conn.close();
-            }
+//            if (conn != null) {
+//                conn.close();
+//            }
         }
         return null;
     }
@@ -151,7 +164,7 @@ public class UserDAO {
         ResultSet rs = null;
 
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             if (conn != null) {
                 String sql = "select * from tblUsers where id  = ?";
                 stm = conn.prepareStatement(sql);
@@ -188,7 +201,7 @@ public class UserDAO {
         ResultSet rs = null;
         
         try {
-            conn = this.connection;
+            conn = this.conInterface.makeConnection();
             if (conn != null) {
                 String sql = "select * from tblUsers";
                 stm = conn.prepareStatement(sql);
@@ -216,11 +229,83 @@ public class UserDAO {
         }
         return arrayList;
     }
-//    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//        UserDAO userDAO = new UserDAO();
-//        for (UserDTO userDTO : userDAO.getAllUser()) {
-//            System.out.println(userDTO.toString());
-//        }
-//    }
+    
+    public List<UserDTO> getAllUserByRoldId(int roldId) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        List<UserDTO> arrayList = new ArrayList<>();
+        ResultSet rs = null;
+        
+        try {
+            conn = this.conInterface.makeConnection();
+            if (conn != null) {
+                String sql = "select * from tblUsers where roleId = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, roldId);
+                rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    arrayList.add(new UserDTO(rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("name"),
+                            rs.getString("avatar"),
+                            rs.getString("address"),
+                            rs.getString("phoneNum"),
+                            getRoleName(rs.getInt("roleId"))));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return arrayList;
+    }
+    
+    public UserDTO getUser() throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+//        List<UserDTO> arrayList = new ArrayList<>();
+        UserDTO userDTO = new UserDTO();
+        ResultSet rs = null;
+        
+        try {
+            conn = this.conInterface.makeConnection();
+            if (conn != null) {
+                String sql = "select * from tblUsers";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    userDTO = new UserDTO(rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("name"),
+                            rs.getString("avatar"),
+                            rs.getString("address"),
+                            rs.getString("phoneNum"),
+                            getRoleName(rs.getInt("roleId")));
+                    return userDTO;
+                }
+                
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+
 
 }
