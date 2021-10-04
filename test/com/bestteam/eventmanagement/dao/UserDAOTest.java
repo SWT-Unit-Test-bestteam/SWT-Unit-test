@@ -7,20 +7,20 @@ package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.UserDTO;
 import java.sql.SQLException;
-import java.util.List;
 import junit.framework.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+//import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 
 /**
  *
  * @author admin
  */
 public class UserDAOTest {
-    @Test
       //biến 1 hàm đi kèm ái Annotation này thành hàm main()
+    @Test
     public void checkUpdateUserGivenRightArgumentReturnsWell() throws SQLException, ClassNotFoundException{
         
         
@@ -29,8 +29,11 @@ public class UserDAOTest {
         UserDTO userDTO1 = userDAO.findUserReturnDTO(2);
         UserDTO userDTO = new UserDTO(1, "antruong300&gmail.com", "thien an", "img/dasdhh", "quan 2 ", "093223", "admin");
         
-        Assert.assertNotNull(userDTO1);
         
-        
+    }
+    @Test
+    public void test() throws SQLException, ClassNotFoundException {
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateUserAction("abc", "antruong3007@gmail.com", "abc", "abc");
     }
 }

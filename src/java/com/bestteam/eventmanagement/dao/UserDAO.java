@@ -54,12 +54,12 @@ public class UserDAO {
     }
 
     //Ham update thong tin user vao DB
-    public boolean updateUser(UserDTO user) throws SQLException, NamingException {
+    public boolean updateUser(UserDTO user) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn = DBHelper.makeConnection();
+            conn = DBHelperUnitTest.getConnection();
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
                         + " SET name=?, address=?, phoneNum=?"
@@ -80,6 +80,19 @@ public class UserDAO {
             }
         }
         return check;
+    }
+    
+    public void updateUserAction(String name, String email, String address, String phone) throws SQLException, ClassNotFoundException {
+        UserDTO userDTO = new UserDTO(1, email, name, "123", address, phone, "123");
+        validateUser(userDTO);
+        updateUser(userDTO);
+    }
+    
+    public void validateUser(UserDTO user) {
+        user.nameValidation();
+        user.emailValidation();
+        user.addressValidation();
+        user.phoneValidation();
     }
 
     public boolean findUser(int userid) throws SQLException, ClassNotFoundException {

@@ -90,6 +90,31 @@ public class UserDTO {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+    
+    public void nameValidation() {
+        if (this.name.isEmpty()) {
+            throw new RuntimeException("Username must not be emptied");
+        }
+    }
+    
+    public void phoneValidation() {
+        if (this.phoneNum.isEmpty()) {
+            throw new RuntimeException("Phone must not be emptied");
+        }
+    }
+    
+    public void emailValidation() {
+        if (this.email.isEmpty()) {
+            throw new RuntimeException("Email must not be emptied");
+        }
+    }
+    
+    public void addressValidation() {
+        if (this.address.isEmpty()) {
+            throw new RuntimeException("Address must not be emptied");
+        }
+    }
+    
 
     @Override
     public String toString() {
