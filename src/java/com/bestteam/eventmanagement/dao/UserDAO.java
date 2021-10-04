@@ -7,10 +7,12 @@ package com.bestteam.eventmanagement.dao;
 
 import com.bestteam.eventmanagement.dto.UserDTO;
 import com.bestteam.eventmanagement.utils.ConnectionInterface;
-import com.bestteam.eventmanagement.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -41,7 +43,7 @@ public class UserDAO {
                 stm.setString(3, user.getAvatar());
                 stm.setString(4, user.getAddress());
                 stm.setString(5, user.getPhoneNum());
-                stm.setInt(6, "STUDENT".equals(user.getRoleName())? 1 : 2);
+                stm.setInt(6, "STUDENT".equals(user.getRoleName()) ? 1 : 2);
                 check = stm.executeUpdate() > 0;
             }
         } finally {
@@ -55,9 +57,9 @@ public class UserDAO {
         return check;
 
     }
-    
+
     //Ham update thong tin user vao DB
-    public boolean updateUser(UserDTO user) throws SQLException {
+    public boolean updateUser(UserDTO user) throws SQLException, NamingException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -74,8 +76,6 @@ public class UserDAO {
                 stm.setString(4, user.getEmail());
                 check = stm.executeUpdate() > 0;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (stm != null) {
                 stm.close();
@@ -86,5 +86,141 @@ public class UserDAO {
         }
         return check;
     }
+
+    public boolean findUser(int userid) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = this.connection;
+            if (conn != null) {
+                String sql = "select email from tblUsers where id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userid);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public String getRoleName(int roleID) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = this.connection;
+            String sql = "select roleName from tblRoles where id  = ?";
+            stm = conn.prepareStatement(sql);
+            stm.setInt(1, roleID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+
+    public UserDTO findUserReturnDTO(int userid) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = this.connection;
+            if (conn != null) {
+                String sql = "select * from tblUsers where id  = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userid);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return new UserDTO(rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("name"),
+                            rs.getString("avatar"),
+                            rs.getString("address"),
+                            rs.getString("phoneNum"),
+                            getRoleName(rs.getInt("roleId")));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+
+    public List<UserDTO> getAllUser() throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        List<UserDTO> arrayList = new ArrayList<>();
+        ResultSet rs = null;
+        
+        try {
+            conn = this.connection;
+            if (conn != null) {
+                String sql = "select * from tblUsers";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    arrayList.add(new UserDTO(rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("name"),
+                            rs.getString("avatar"),
+                            rs.getString("address"),
+                            rs.getString("phoneNum"),
+                            getRoleName(rs.getInt("roleId"))));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return arrayList;
+    }
+//    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//        UserDAO userDAO = new UserDAO();
+//        for (UserDTO userDTO : userDAO.getAllUser()) {
+//            System.out.println(userDTO.toString());
+//        }
+//    }
 
 }

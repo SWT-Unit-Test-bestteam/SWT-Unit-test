@@ -18,6 +18,11 @@ public class UserDTO {
     private String phoneNum;
     private String roleName;
 
+    public UserDTO() {
+    }
+    
+    
+
     public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
         this.email = email;
@@ -84,6 +89,11 @@ public class UserDTO {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", avatar=" + avatar + ", address=" + address + ", phoneNum=" + phoneNum + ", roleName=" + roleName + '}';
     }
 
     

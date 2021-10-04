@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/EventManagementUnitTest">
-  <Resource auth="Container" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="90" maxIdle="30" maxWait="1000" name="DBSlink" password="root" type="javax.sql.DataSource" url="jdbc:sqlserver://localhost:1433;databaseName=EventManagementUnitTest;instanceName=DUONGMH" username="sa"/>
+    <Resource auth="Container" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="90" maxIdle="30" maxWait="1000" name="DBSlink" password="root" type="javax.sql.DataSource" url="jdbc:sqlserver://localhost:1433;databaseName=EventManagementUnitTest;instanceName=DUONGMH" username="sa"/>
 </Context>
+

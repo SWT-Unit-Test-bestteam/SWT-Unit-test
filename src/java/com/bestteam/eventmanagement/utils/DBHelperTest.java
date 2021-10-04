@@ -13,16 +13,19 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class DBHelper {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
+public class DBHelperTest {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+        
+        final String serverName = "localhost";
+        final String dbName = "EventManagement";
+        final String portNumber = "1433";
+        final String userID = "sa";
+        final String password = "123";
+        
         String url = "jdbc:sqlserver://"+ serverName+":"+portNumber+";databaseName="+dbName+";instanceName=DUONGMH";
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return DriverManager.getConnection(url, userID, password);
     }
     
-    private final String serverName = "localhost";
-    private final String dbName = "EventManagementUnitTest";
-    private final String portNumber = "1433";
-    private final String userID = "sa";
-    private final String password = "root";
+    
 }

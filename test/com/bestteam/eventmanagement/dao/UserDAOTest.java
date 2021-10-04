@@ -5,11 +5,9 @@
  */
 package com.bestteam.eventmanagement.dao;
 
+import com.bestteam.eventmanagement.dto.UserDTO;
 import com.bestteam.eventmanagement.utils.ConnectionInterface;
-import com.bestteam.eventmanagement.utils.DBHelper;
-import com.bestteam.eventmanagement.utils.DBHelperUnitTest;
 import java.sql.SQLException;
-import javax.naming.NamingException;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -20,26 +18,15 @@ import org.junit.Test;
 public class UserDAOTest {
     
     @Test   //biến 1 hàm đi kèm ái Annotation này thành hàm main()
-    public void checkUpdateUserGivenRightArgumentReturnsWell() {
-        ConnectionInterface DBTest = (ConnectionInterface) new DBHelperUnitTest();
-        LocationDAO dao = new LocationDAO(DBTest);
+    public void checkUpdateUserGivenRightArgumentReturnsWell() throws SQLException, ClassNotFoundException {
+        ConnectionInterface DBTest = (ConnectionInterface) new DBHelperTest();
+        UserDAO userDAO = new UserDAO(DBTest);
         
-        try {
-            // return False
-            Assert.assertFalse(dao.getLocationByName("E"));
-            
-            // return True
-            Assert.assertTrue(dao.getLocationByName("A"));
-            Assert.assertTrue(dao.getLocationByName("B"));
-            Assert.assertTrue(dao.getLocationByName("AB"));
-            Assert.assertTrue(dao.getLocationByName("BC"));
-            
-        } catch (NamingException ex) {
-            System.out.println(ex);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-
+        UserDTO userDTO1 = userDAO.findUserReturnDTO(2);
+        UserDTO userDTO = new UserDTO(1, "antruong300&gmail.com", "thien an", "img/dasdhh", "quan 2 ", "093223", "admin");
+        
+        Assert.assertNotNull(userDTO1);
+        
+        
     }
-    
 }
